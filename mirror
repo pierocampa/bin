@@ -1,0 +1,24 @@
+#!/bin/bash
+# Author: Piero Campalani
+# Mirrors the present working directory to the specified target directory.
+#
+# Usage
+# > cd /my/srcfolder; mirror /backup/of/srcfolder
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+
+USAGE="usage: $0 DIRECTORY"
+SOURCE="$( pwd )/"
+TARGET="$1";
+
+# args check
+if [ -z "$TARGET" ]; then
+    echo "$USAGE"
+    exit 1
+fi
+
+# create backup folder if it does not exist
+[[ -d "$TARGET" ]] || mkdir -p "$TARGET"
+
+# r : recursive
+# u : skip files which are new in TARGET  
+rsync -ruv --delete "$SOURCE" "$TARGET"	
